@@ -34,7 +34,6 @@
         name:
           - timescaledb-postgresql-12
         state: present
-
     - name: check if postgresql data directory exist
       stat: path=/var/lib/pgsql/12/data
       register: p
@@ -54,14 +53,14 @@
       become_user: postgres
       replace:
         path: /var/lib/pgsql/12/data/postgresql.conf
-        regexp: "^#listen_addresses = 'localhost' "
+        regexp: "^#listen_addresses = 'localhost'         # what IP address(es) to listen on; "
         replace: "listen_addresses = '*'"
         backup: yes
     - name: setup preload library
       become_user: postgres
       replace:
         path: /var/lib/pgsql/12/data/postgresql.conf
-        regexp: "^#shared_preload_libraries = '' "
+        regexp: "^#shared_preload_libraries = ''  # (change requires restart)"
         replace: "shared_preload_libraries = 'timescaledb' "
         backup: yes
     - name: setup public ip address in pg_hba.conf
@@ -71,5 +70,5 @@
         regexp: '^# IPv4 '
         insertafter: '^# IPv4 '
         line: 'host all all {{ip}}/32 md5'
-
+        backup: yes
 
