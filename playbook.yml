@@ -2,6 +2,10 @@
 - name: Install TimescaleDB Postgresql
   hosts: localhost
   become: true
+  vars_prompt:
+    - name: "ip"
+      prompt: "Entrer votre ip"
+      private: no
   tasks:
     - name: update all packages
       yum:
@@ -40,8 +44,26 @@
     - name: run initdb
       become_user: postgres
       command: /usr/pgsql-12/bin/initdb -D /var/lib/pgsql/12/data
-      
-
-
+    - name: Replace postgresql config list addresses
+      become_user: postgres
+      replace:
+        path: /var/lib/pgsql/12/data/postgresql.conf
+        regexp: "^#listen_addresses = 'localhost' "
+        replace: "listen_addresses = '*'"
+        backup: yes
+    - name: setup preload library
+      become_user: postgres
+      replace:
+        path: /var/lib/pgsql/12/data/postgresql.conf
+        regexp: "^#shared_preload_libraries = '' "
+        replace: "shared_preload_libraries = 'timescaledb' "
+        backup: yes
+    - name: setup public ip address in pg_hba.conf
+      become_user: postgres
+      lineinfile:
+        path:
+        regexp: '^# IPv4 '
+        insertafter: '^# IPv4 '
+        line: 'host all all {{ip}}/32 md5'
 
 
