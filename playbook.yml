@@ -59,10 +59,11 @@
         backup: yes
     - name: setup preload library
       become_user: postgres
-      replace:
+      lineinfile:
         path: /var/lib/pgsql/12/data/postgresql.conf
         regexp: "^#shared_preload_libraries = ''  # (change requires restart)"
-        replace: "shared_preload_libraries = 'timescaledb' "
+        insertafter: '^shared_preload_libraries'
+        line: "shared_preload_libraries = 'timescaledb' "
         backup: yes
     - name: setup public ip address in pg_hba.conf
       become_user: postgres
