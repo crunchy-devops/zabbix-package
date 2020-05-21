@@ -4,7 +4,7 @@
 Switch to sudo user   
 ```sudo -s```
 
-```yum install -y https://download.postgresql.org/pub/repos/yum/11/redhat/rhel-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm```
+```yum install -y https://download.postgresql.org/pub/repos/yum/12/redhat/rhel-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm```
 
 add a repo ,copy and paste the following snippet
 ```shell script

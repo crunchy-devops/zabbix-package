@@ -1,0 +1,20 @@
+---
+- name: Install TimescaleDB Postgresql
+  host: localhost
+  become: true
+  tasks:
+    - name: update all packages
+      yum:
+        name: '*'
+        state: latest
+        exclude: kernel*
+    - name: Add package epel-release
+      yum:
+        name:
+          - epel-release
+        state: present
+    - name: Add package epel-release
+      yum:
+        name:
+          - https://download.postgresql.org/pub/repos/yum/12/redhat/rhel-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+        state: present
