@@ -67,7 +67,7 @@
     - name: setup public ip address in pg_hba.conf
       become_user: postgres
       lineinfile:
-        path:
+        path: /var/lib/pgsql/12/data/pg_hba.conf
         regexp: '^# IPv4 '
         insertafter: '^# IPv4 '
         line: 'host all all {{ip}}/32 md5'
