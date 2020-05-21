@@ -1,6 +1,6 @@
 ---
 - name: Install TimescaleDB Postgresql
-  host: localhost
+  hosts: localhost
   become: true
   tasks:
     - name: update all packages
