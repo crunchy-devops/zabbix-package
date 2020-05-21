@@ -73,10 +73,6 @@
         insertafter: '^# IPv4 '
         line: 'host all all {{ip}}/32 md5'
         backup: yes
-    - name: set posgres password
-      postgresql_user:
-        user: postgres
-        password: password
     - name: Start postgresql service
       service:
         name: postgresql-12
