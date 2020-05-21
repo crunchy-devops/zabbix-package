@@ -49,6 +49,7 @@
     - name: run initdb
       become_user: postgres
       command: /usr/pgsql-12/bin/initdb -D /var/lib/pgsql/12/data
+      when: not p.stat.exists
     - name: Replace postgresql config list addresses
       become_user: postgres
       replace:
