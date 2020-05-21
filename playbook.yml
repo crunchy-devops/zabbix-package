@@ -34,6 +34,10 @@
         name:
           - timescaledb-postgresql-12
         state: present
+
+    - name: check if postgresql data directory exist
+      stat: path=/var/lib/pgsql/12/data
+      register: p
     - name: Recursively change ownership of a directory
       file:
         path: /var/lib/pgsql/12/data
@@ -41,6 +45,7 @@
         recurse: yes
         owner: postgres
         group: postgres
+      when: not p.stat.exists
     - name: run initdb
       become_user: postgres
       command: /usr/pgsql-12/bin/initdb -D /var/lib/pgsql/12/data
