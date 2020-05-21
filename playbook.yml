@@ -21,13 +21,12 @@
     - name: copy timescaledb repo
       template: src=timescaledb.repo dest=/etc/yum.repos.d/timescale_timescaledb.repo
     - name: update all packages
-        yum:
-          name: '*'
-          state: latest
-          exclude: kernel*
+      yum:
+        name: '*'
+        state: latest
+        exclude: kernel*
     - name: Add package epel-release
-        yum:
-          name:
-            - timescaledb-postgresql-12
-          state: present
-    
+      yum:
+        name:
+          - timescaledb-postgresql-12
+        state: present
