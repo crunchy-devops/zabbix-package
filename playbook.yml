@@ -62,7 +62,7 @@
       lineinfile:
         path: /var/lib/pgsql/12/data/postgresql.conf
         regexp: "^#shared_preload_libraries = ''  # (change requires restart)"
-        insertafter: '^shared_preload_libraries'
+        insertafter: '^#shared_preload_libraries'
         line: "shared_preload_libraries = 'timescaledb' "
         backup: yes
     - name: setup public ip address in pg_hba.conf
@@ -73,4 +73,12 @@
         insertafter: '^# IPv4 '
         line: 'host all all {{ip}}/32 md5'
         backup: yes
+    - name: set posgres password
+      postgresql_user:
+        user: postgres
+        password: password
+    - name: Start postgresql service
+      service:
+        name: postgresql-12
+        state: started
 
