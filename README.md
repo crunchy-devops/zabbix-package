@@ -28,35 +28,35 @@ Type
 ``` yum install -y timescaledb-postgresql-12```
 
 ## Initdb 
-as sudo 
+as a sudo user 
 ```shell script
  mkdir -p /var/lib/pgsql/12/data
  chown -R postgres:postgres /var/lib/pgsql
 ```
-as user postgres
+as a postgres user
 ```
   su - postgres
   usr/pgsql-12/bin/initdb -D /var/lib/pgsql/12/data  
 ```
 ## Change pg_hba.conf and postgresql.conf
-Gey your public  ip address  
+Get your public ip address  
 https://www.whatismyip-address.com/?check  
-open  pg_hba.conf add the following line  
+open in /var/lib/pgsql/12/data/pg_hba.conf add the following line  
 ```shell script
 host    postgres        postgres        <your_ip>/32          md5  
 ```
-Change these lines 
+Change these lines in /var/lib/pgsql/12/data/postgresql.conf
 ``` 
 listen_addresses = '*'   
 shared_preload_libraries = 'timescaledb'
 ```
 ## set a postgres password
-as postgres user  
+as a postgres user  
 type psql 
 and ```ALTER USER postgres WITH PASSWORD 'password' ```
 
 ## Start postgresql service 
-as user root
+as a root user 
 ```shell script
 systemctl start postgresql-12 
 systemctl enable postgresql-12
