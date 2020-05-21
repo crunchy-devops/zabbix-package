@@ -25,8 +25,23 @@
         name: '*'
         state: latest
         exclude: kernel*
-    - name: Add package epel-release
+    - name: Add package timescaledb package
       yum:
         name:
           - timescaledb-postgresql-12
         state: present
+    - name: Recursively change ownership of a directory
+      file:
+        path: /var/lib/pgsql/12/data
+        state: directory
+        recurse: yes
+        owner: postgres
+        group: postgres
+    - name: run initdb
+      become_user: postgres
+      command: /usr/pgsql-12/bin/initdb -D /var/lib/pgsql/12/data
+      
+
+
+
+

@@ -36,7 +36,7 @@ as a sudo user
 as a postgres user
 ```
   su - postgres
-  usr/pgsql-12/bin/initdb -D /var/lib/pgsql/12/data  
+  /usr/pgsql-12/bin/initdb -D /var/lib/pgsql/12/data  
 ```
 ## Change pg_hba.conf and postgresql.conf
 Get your public ip address  
