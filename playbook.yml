@@ -51,10 +51,11 @@
       when: not p.stat.exists
     - name: Replace postgresql config list addresses
       become_user: postgres
-      replace:
+      lineinfile:
         path: /var/lib/pgsql/12/data/postgresql.conf
         regexp: "^#listen_addresses = 'localhost'         # what IP address(es) to listen on; "
-        replace: "listen_addresses = '*'"
+        insertafter: '^#listen_addresses'
+        line: "listen_addresses = '*' "
         backup: yes
     - name: setup preload library
       become_user: postgres
