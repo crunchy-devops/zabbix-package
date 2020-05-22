@@ -52,7 +52,7 @@ shared_preload_libraries = 'timescaledb'
 ```
 ## set a postgres password
 as a postgres user  
-type psql 
+type ```psql```     
 and ```ALTER USER postgres WITH PASSWORD 'password' ```
 
 ## Start postgresql service 
@@ -61,3 +61,16 @@ as a root user
 systemctl start postgresql-12 
 systemctl enable postgresql-12
 ```
+
+## set booleans for the zabbix connectivity
+```shell script
+   sudo setsebool -P zabbix_can_network 1
+   sudo setsebool -P httpd_can_network_connect_db 1
+   sudo setsebool -P httpd_can_network_connect 1
+   grep AVC /var/log/audit/audit.log* | audit2allow -M systemd-allow; semodule -i systemd-allow.pp
+```
+
+## Connection 
+in your browser type <ip_de_votre_vm>/zabbix
+username: Admin
+password: zabbix
